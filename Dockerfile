@@ -1,13 +1,21 @@
-# Используем официальный образ Couchbase
-FROM couchbase:community
+# Указываем базовый образ с Node.js (можно использовать нужную версию, например, 18)
+FROM node:18
 
-# Задаем переменные окружения для Couchbase
-ENV COUCHBASE_ADMINISTRATOR_USERNAME=admin
-ENV COUCHBASE_ADMINISTRATOR_PASSWORD=password
+# Устанавливаем рабочую директорию
+WORKDIR /app
 
-# Открываем порты для Couchbase
-EXPOSE 8091 8092 8093 8094 11210
+# Копируем файлы package.json и package-lock.json
+COPY package*.json ./
 
-# Задаем рабочую директорию
-WORKDIR /opt/couchbase
+# Устанавливаем зависимости
+RUN npm install
+
+# Копируем все файлы проекта
+COPY . .
+
+# Указываем порт, на котором работает приложение
+EXPOSE 3000
+
+# Запускаем приложение
+CMD ["npm", "start"]
 
