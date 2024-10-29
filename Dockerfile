@@ -1,5 +1,4 @@
-FROM jenkins/jenkins:lts
-USER root
-RUN apt-get update && apt-get install -y docker.io
-USER jenkins
+FROM maven:3.8.6-openjdk-11
+WORKDIR /app
+COPY . /app
 
